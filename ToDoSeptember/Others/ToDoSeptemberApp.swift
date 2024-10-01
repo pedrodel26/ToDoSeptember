@@ -16,7 +16,7 @@ struct ToDoSeptemberApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+            ToDoListView()
         }
     }
 }

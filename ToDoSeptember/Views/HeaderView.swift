@@ -8,34 +8,40 @@
 import SwiftUI
 
 struct HeaderView: View {
+    let title: String
+    let subtitle: String
+    let angle: Double
+    let color: Color
+    
+    
     var body: some View {
         //MARK: - Header
         ZStack {
             RoundedRectangle(cornerSize: .zero)
-                .fill(Color.red)
-                .rotationEffect(Angle(degrees: 15))
+                .fill(color)
+                .rotationEffect(Angle(degrees: angle))
                 /*.rotationEffect(.radians(-50))*/ // Adjust angle for diagonal
                 
             
             VStack {
-                Text("To Do List")
+                Text(title)
                     .font(.system(size: 38))
                     .bold()
                 
-                Text("Get things done")
+                Text(subtitle)
                     .font(.title2)
                     
             }
             .foregroundStyle(.white)
-            .padding(.top, 45)
+            .padding(.top, 60)
         }
-        .frame(width: UIScreen.main.bounds.width * 3, height: 290)
+        .frame(width: UIScreen.main.bounds.width * 3, height: 300)
 //                .frame(width: 480, height: 200)
-        .offset(y: -100) // Adjust offset for positioning
+        .offset(y: -150) // Adjust offset for positioning
         
     }
 }
 
 #Preview {
-    HeaderView()
+    HeaderView(title: "Title", subtitle: "shuffle mode", angle: 15, color: Color.blue)
 }

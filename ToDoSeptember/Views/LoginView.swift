@@ -8,36 +8,34 @@
 import SwiftUI
 
 struct LoginView: View {
-    
-    @State var email = ""
-    @State var password = ""
-    
+    @StateObject var viewModel = LoginViewViewModel()
+
     var body: some View {
         
         NavigationStack {
             VStack(spacing: 18) {
-                HeaderView()
+                HeaderView(title: "To Do List", subtitle: "Get things done", angle: 15, color: Color.red)
                 
                 VStack {       
                     Form {
-                        TextField("Email", text: $email)
-                        SecureField("Password", text: $password)
-                        
-                        NavigationLink {
-                            MainView()
-                        } label: {
-                            ZStack {
-                                Rectangle()
-                                    .fill(.blue)
-                                    .clipShape(.rect(cornerRadius: 10))
-                                
-                                Text("Log in")
-                                    .foregroundStyle(.white)
-                                    .bold()
-                            }
+                        if !viewModel.errorMessage.isEmpty {
+                            Text(viewModel.errorMessage)
+                                .foregroundStyle(.red) 
                         }
+                        
+                        TextField("Email", text: $viewModel.email)
+                            .autocorrectionDisabled()
+                            .textInputAutocapitalization(.never)
+                        SecureField("Password", text: $viewModel.password)
+                        
+                        TLButton(title: "Log in", background: Color.blue){
+                            viewModel.login()
+                        }
+
                     }
+                    .offset(y: -20)
                 }
+                
                 
                 VStack {
                     Text("New around here?")
@@ -45,6 +43,7 @@ struct LoginView: View {
                     NavigationLink("Create an account") {
                         RegisterView()
                     }
+                    .navigationBarBackButtonHidden(true)
                 }
                 
                 Spacer()
